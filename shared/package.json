@@ -1,0 +1,10 @@
+{
+  "name": "@promptflow/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "sequelize": "^6.37.7",
+    "zod": "^3.24.3"
+  }
+}

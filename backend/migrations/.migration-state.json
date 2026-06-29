@@ -1,0 +1,1078 @@
+{
+  "users": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.UUID",
+        "allowNull": false,
+        "defaultValue": {},
+        "primaryKey": true,
+        "comment": "User_field1: Unique identifier for the user",
+        "typeDetails": {
+          "isUUID": true,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "name": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "comment": "User_field2: Name of the user",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "email": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "unique": true,
+        "comment": "User_field3: Email address of the user",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "password": {
+        "type": "Sequelize.TEXT",
+        "allowNull": false,
+        "comment": "User_field4: Password of the user",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": true,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "role": {
+        "type": "Sequelize.ENUM('admin', 'user')",
+        "allowNull": false,
+        "comment": "User_field5: Role of the user",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": true,
+          "enumValues": [
+            "admin",
+            "user"
+          ]
+        }
+      },
+      "is_active": {
+        "type": "Sequelize.BOOLEAN",
+        "allowNull": false,
+        "defaultValue": true,
+        "comment": "User_field6: Indicates if the user is active",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": true,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "metadata": {
+        "type": "Sequelize.JSON",
+        "allowNull": false,
+        "defaultValue": {},
+        "comment": "User_field7: Extensible metadata",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "createdAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "updatedAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  },
+  "user_sessions": {
+    "columns": {
+      "sid": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "primaryKey": true,
+        "unique": true,
+        "comment": "UserSession_field1: Unique identifier for the session",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "sess": {
+        "type": "Sequelize.JSON",
+        "allowNull": false,
+        "defaultValue": null,
+        "comment": "UserSession_field2: Session data",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "expire": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "comment": "UserSession_field3: Expiration date of the session",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": [
+      {
+        "fields": [
+          "sid"
+        ],
+        "unique": true,
+        "type": "",
+        "parser": null,
+        "name": "user_sessions_sid"
+      },
+      {
+        "fields": [
+          "expire"
+        ],
+        "type": "",
+        "parser": null,
+        "name": "user_sessions_expire"
+      }
+    ]
+  },
+  "chat_flows": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "primaryKey": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "name": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "description": {
+        "type": "Sequelize.TEXT",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": true,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "flow_data": {
+        "type": "Sequelize.JSON",
+        "allowNull": false,
+        "defaultValue": {},
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "deployed": {
+        "type": "Sequelize.BOOLEAN",
+        "allowNull": false,
+        "defaultValue": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": true,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "is_public": {
+        "type": "Sequelize.BOOLEAN",
+        "allowNull": false,
+        "defaultValue": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": true,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "author_id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "workspace_id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "chatbot_config": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "runtime_config": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "createdAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "updatedAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  },
+  "chat_messages": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "primaryKey": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "session_id": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "references": {
+          "model": "runtime_sessions",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "chatflow_id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "references": {
+          "model": "chat_flows",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "role": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "content": {
+        "type": "Sequelize.TEXT",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": true,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "source_documents": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "file_annotations": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "createdAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  },
+  "runtime_sessions": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "primaryKey": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "flow_id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "references": {
+          "model": "chat_flows",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "user_id": {
+        "type": "Sequelize.UUID",
+        "allowNull": false,
+        "references": {
+          "model": "users",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": true,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "inputs": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "variables": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "outputs": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "status": {
+        "type": "Sequelize.ENUM('pending', 'running', 'completed', 'failed', 'cancelled')",
+        "allowNull": false,
+        "defaultValue": "pending",
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": true,
+          "enumValues": [
+            "pending",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ]
+        }
+      },
+      "metadata": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "started_at": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "defaultValue": {},
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "completed_at": {
+        "type": "Sequelize.DATE",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  },
+  "flow_versions": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "primaryKey": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "flow_id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "references": {
+          "model": "chat_flows",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "data": {
+        "type": "Sequelize.JSON",
+        "allowNull": false,
+        "defaultValue": {},
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "inputs": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "author": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "comment": {
+        "type": "Sequelize.STRING",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "version_number": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "createdAt": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  },
+  "node_executions": {
+    "columns": {
+      "id": {
+        "type": "Sequelize.INTEGER",
+        "allowNull": false,
+        "primaryKey": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": true,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "session_id": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "references": {
+          "model": "runtime_sessions",
+          "key": "id"
+        },
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "node_id": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "node_type": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "inputs": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "outputs": {
+        "type": "Sequelize.JSON",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": true,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "execution_time": {
+        "type": "Sequelize.FLOAT",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": true,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "status": {
+        "type": "Sequelize.STRING",
+        "allowNull": false,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": true,
+          "isText": false,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "error": {
+        "type": "Sequelize.TEXT",
+        "allowNull": true,
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": true,
+          "isInteger": false,
+          "isDate": false,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      },
+      "timestamp": {
+        "type": "Sequelize.DATE",
+        "allowNull": false,
+        "defaultValue": {},
+        "typeDetails": {
+          "isUUID": false,
+          "isString": false,
+          "isText": false,
+          "isInteger": false,
+          "isDate": true,
+          "isBoolean": false,
+          "isJSON": false,
+          "isFloat": false,
+          "isEnum": false,
+          "enumValues": null
+        }
+      }
+    },
+    "indexes": []
+  }
+}

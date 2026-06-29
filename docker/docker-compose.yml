@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-kesaridevaraya}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
+      POSTGRES_DB: ${POSTGRES_DB:-flow}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: prod
+      PORT: 5000
+      DATABASE_URL: postgres://${POSTGRES_USER:-kesaridevaraya}@postgres:5432/${POSTGRES_DB:-flow}
+      AI_ENGINE_URL: http://ai:8000
+      ALLOWED_ORIGINS: http://localhost:3000
+    depends_on:
+      - postgres
+      - ai
+
+  ai:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.ai
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
