@@ -1,15 +1,14 @@
-import { Button } from '@/components/ui/button'
+import { RouterProvider } from "react-router-dom";
+import { ThemeSync } from "@/components/ThemeSync";
+import { router } from "./routes";
 
 function App() {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-4 bg-background p-8 text-foreground">
-      <h1 className="text-3xl font-semibold tracking-tight">Promptflow</h1>
-      <p className="text-muted-foreground">
-        Vite + Tailwind CSS + shadcn/ui
-      </p>
-      <Button>Get started</Button>
-    </main>
-  )
+    <>
+      <ThemeSync />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,21 @@
+import { useEffect } from "react";
+import { applyTheme, useThemeStore } from "@/stores/theme-store";
+
+export function ThemeSync() {
+  const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (theme !== "system") return;
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => applyTheme("system");
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, [theme]);
+
+  return null;
+}
