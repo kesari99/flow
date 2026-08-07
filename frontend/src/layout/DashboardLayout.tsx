@@ -1,10 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import type { CSSProperties } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardSidebar from "./Sidebar";
 import AppHeader from "./Header";
 
+function isFlowBuilderPath(pathname: string) {
+  return /^\/flows\/[^/]+\/edit\/?$/.test(pathname);
+}
+
 export default function DashboardLayout() {
+  const { pathname } = useLocation();
+  const fullBleed = isFlowBuilderPath(pathname);
+
   return (
     <SidebarProvider
       style={
@@ -19,12 +26,24 @@ export default function DashboardLayout() {
         <div className="flex min-w-0 flex-1 flex-col p-3 pl-2">
           <div className="border-border bg-elevated flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border">
             <AppHeader />
-            <main className="flex-1 overflow-y-auto">
-              <div className="p-6">
-                <div className="mx-auto max-w-6xl">
+            <main
+              className={
+                fullBleed
+                  ? "relative min-h-0 flex-1 overflow-hidden"
+                  : "min-h-0 flex-1 overflow-y-auto"
+              }
+            >
+              {fullBleed ? (
+                <div className="absolute inset-0">
                   <Outlet />
                 </div>
-              </div>
+              ) : (
+                <div className="p-6">
+                  <div className="mx-auto max-w-6xl">
+                    <Outlet />
+                  </div>
+                </div>
+              )}
             </main>
           </div>
         </div>

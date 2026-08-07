@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,11 +9,15 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { getBreadcrumbs } from "@/config/navigation";
+import { useCurrentUserQuery, useLogoutMutation } from "@/hooks/auth";
 import { ChevronDown } from "lucide-react";
 
 export default function AppHeader() {
   const location = useLocation();
+  const navigate = useNavigate();
   const breadcrumbs = getBreadcrumbs(location.pathname);
+  const userQuery = useCurrentUserQuery();
+  const logoutMutation = useLogoutMutation();
 
   return (
     <header className="border-border flex h-12 shrink-0 items-center gap-3 border-b px-4">
@@ -50,11 +54,23 @@ export default function AppHeader() {
       </Breadcrumb>
 
       <div className="ml-auto flex items-center gap-2">
-        <Button variant="outline" size="sm" className="h-7 text-xs">
-          Share
-        </Button>
-        <Button size="sm" className="h-7 text-xs">
-          Deploy
+        {userQuery.data ? (
+          <span className="hidden text-xs text-muted-foreground sm:inline">
+            {userQuery.data.email}
+          </span>
+        ) : null}
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-7 text-xs"
+          disabled={logoutMutation.isPending}
+          onClick={() => {
+            void logoutMutation.mutateAsync().then(() => {
+              navigate("/login", { replace: true });
+            });
+          }}
+        >
+          Sign out
         </Button>
       </div>
     </header>

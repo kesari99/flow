@@ -1,12 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
+import { BaseError } from '@server/utils/errors';
+import { ResponseHelper } from '@server/helper/response.helper';
 
 export const errorMiddleware = (
-  err: any,
+  err: Error,
   _req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  const status = err.status || err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-  res.status(status).json({ message });
+  if (err instanceof BaseError) {
+    return ResponseHelper.error(res, err);
+  }
+
+  return ResponseHelper.error(res, err);
 };

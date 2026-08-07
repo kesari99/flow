@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev:all": "concurrently -n backend,frontend,ai -c blue,green,magenta \"npm run dev\" \"npm run dev --workspace=frontend\" \"cd ../ai-engine && python3 -m uvicorn app.main:app --reload --port 8000\"",
+    "dev:all": "concurrently -n backend,frontend,ai -c blue,green,magenta \"npm run dev\" \"npm run dev --workspace=frontend\" \"cd ../ai-engine && .venv/bin/python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000\"",
     "dev": "NODE_ENV=dev tsx src/index.ts",
     "start": "NODE_ENV=prod node dist/index.js",
     "build": "esbuild src/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",

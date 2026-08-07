@@ -20,45 +20,48 @@ router.post(
   AUTH_ENDPOINTS.REGISTER.path,
   async (req: AuthRequest, res) => {
     try {
-      if (
-        !req.isAuthenticated() ||
-        !req.user ||
-        req.user.role !== UserRole.ADMIN
-      ) {
-        return res.status(req.isAuthenticated() ? 403 : 401).json({
-          message: req.isAuthenticated()
-            ? 'Forbidden: admin access required'
-            : 'Authentication required',
-        });
+      const name = String(req.body?.name ?? "").trim();
+      const email = String(req.body?.email ?? "").trim().toLowerCase();
+      const password = String(req.body?.password ?? "");
+
+      if (!name || name.length < 2) {
+        return res.status(400).json({ message: "Name must be at least 2 characters" });
+      }
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
       }
 
-      const role = req.body.role || UserRole.USER;
-      if (role !== UserRole.USER) {
-        return res
-          .status(403)
-          .json({ message: 'Forbidden: invalid role assignment' });
-      }
-
-      const existingUser = await userStorage.getUserByEmail(req.body.email);
+      const existingUser = await userStorage.getUserByEmail(email);
       if (existingUser) {
-        return res.status(400).json({ message: 'Email already in use' });
+        return res.status(400).json({ message: "Email already in use" });
       }
 
-      const passwordValidation = validatePasswordStrength(req.body.password);
+      const passwordValidation = validatePasswordStrength(password);
       if (!passwordValidation.valid) {
         return res.status(400).json({ message: passwordValidation.message });
       }
 
+      // Public self-signup always creates a standard user account.
       const user = await userStorage.createUser({
-        ...req.body,
-        password: await hashPassword(req.body?.password ?? ''),
-        role,
+        name,
+        email,
+        password: await hashPassword(password),
+        role: UserRole.USER,
       });
 
-      const { password, ...userWithoutPassword } = user;
-      return res.status(201).json(userWithoutPassword);
+      const { password: _password, ...userWithoutPassword } = user;
+
+      req.login(userWithoutPassword, (loginErr: Error | null) => {
+        if (loginErr) {
+          customLogger.error("Signup succeeded but session login failed", {
+            error: loginErr.message,
+          });
+          return res.status(201).json(userWithoutPassword);
+        }
+        return res.status(201).json(userWithoutPassword);
+      });
     } catch (error: any) {
-      customLogger.error('Registration failed', { error: error.message });
+      customLogger.error("Registration failed", { error: error.message });
       return res.status(500).json({ message: error.message });
     }
   }

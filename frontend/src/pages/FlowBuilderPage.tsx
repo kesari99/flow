@@ -1,13 +1,23 @@
+import { ReactFlowProvider } from "@xyflow/react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { PageShell } from "@/components/PageShell";
+import { FlowBuilder } from "@/components/flow/FlowBuilder";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function FlowBuilderPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id: routeId } = useParams();
+
+  const flowId = useMemo(() => {
+    if (!routeId || routeId === "new") return undefined;
+    const parsed = Number(routeId);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }, [routeId]);
 
   return (
-    <PageShell
-      title="Flow Builder"
-      description={`Canvas editor for flow #${id}. Loads flow_data with version history (flow_versions).`}
-    />
+    <TooltipProvider>
+      <ReactFlowProvider>
+        <FlowBuilder flowId={flowId} />
+      </ReactFlowProvider>
+    </TooltipProvider>
   );
 }

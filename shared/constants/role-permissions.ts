@@ -25,6 +25,10 @@ export const ENDPOINT_ROLE_POLICY: RolePolicyMap = {
     CREATE: ADMIN_ONLY,
     UPDATE: ALL_ROLES,
   },
+  CHATFLOW: {
+    CREATE: ALL_ROLES,
+    EXECUTE: ALL_ROLES,
+  },
 };
 
 export const getRolesByRouteKey = (

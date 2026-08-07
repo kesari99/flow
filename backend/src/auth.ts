@@ -67,7 +67,8 @@ export const checkRole = () => {
     const endpoints = API_ENDPOINTS[key as keyof typeof API_ENDPOINTS];
 
     if (!endpoints) {
-      return res.status(500).json({ message: 'API endpoint config missing' });
+      // Base path matched (e.g. /api/chat*) but no gated endpoints for this key.
+      return next();
     }
 
     const apiObject = Object.entries(endpoints).find(([_, endpoint]) => {
@@ -76,7 +77,8 @@ export const checkRole = () => {
     });
 
     if (!apiObject) {
-      return res.status(404).json({ message: 'Endpoint not registered' });
+      // Sibling routes under a shared prefix (e.g. /api/chat-flows) are not role-gated here.
+      return next();
     }
 
     const [endpointKey] = apiObject;
@@ -169,7 +171,11 @@ export function setupAuth(app: Express) {
           }
 
           if (await comparePasswords(password, user.password)) {
-            return done(null, { ...user, is_active: user.is_active ?? true });
+            const { password: _password, ...safeUser } = user;
+            return done(null, {
+              ...safeUser,
+              is_active: user.is_active ?? true,
+            });
           }
 
           return done(null, false, { message: 'Invalid email or password' });
@@ -191,7 +197,8 @@ export function setupAuth(app: Express) {
         done(null, false);
         return;
       }
-      done(null, { ...user, is_active: user.is_active ?? true });
+      const { password: _password, ...safeUser } = user;
+      done(null, { ...safeUser, is_active: user.is_active ?? true });
     } catch (error) {
       done(error);
     }
@@ -211,8 +218,11 @@ export function setupAuth(app: Express) {
   };
 
   app.get('/api/user', (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
-    res.json(req.user);
+    if (!req.isAuthenticated() || !req.user) return res.sendStatus(401);
+    const { password: _password, ...safeUser } = req.user as Express.User & {
+      password?: string;
+    };
+    res.json(safeUser);
   });
 
   return { requireAuth };
